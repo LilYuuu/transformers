@@ -191,8 +191,8 @@ class BoolqProcessor(DataProcessor):
     def get_val_examples(self, data_dir):
         """See base class."""
 #        with open(os.path.join(data_dir, "val.jsonl"), "r", encoding="utf-8-sig") as f:
-        with open(os.path.join(data_dir, "val.jsonl")) as f:
-            lines = json.load(f)
+        with open(os.path.join(data_dir, "val.jsonl"), "r") as f:
+            lines = json.loads(json.dump(f.read())
         return self._create_examples(lines, "val")
 
     def get_labels(self):
