@@ -184,6 +184,8 @@ class BoolqProcessor(DataProcessor):
         """See base class."""
         logger.info("LOOKING AT {}".format(os.path.join(data_dir, "train.jsonl")))
 #        with open(os.path.join(data_dir, "train.jsonl"), "r", encoding="utf-8-sig") as f:
+#        with open(os.path.join(data_dir, "val.jsonl"), "r") as f:
+#            lines = json.loads(json.dumps([f.read()]))
         with open(os.path.join(data_dir, "train.jsonl"), "r") as f:
             lines = f.read().splitlines()
             data = []
@@ -194,13 +196,18 @@ class BoolqProcessor(DataProcessor):
     def get_val_examples(self, data_dir):
         """See base class."""
 #        with open(os.path.join(data_dir, "val.jsonl"), "r", encoding="utf-8-sig") as f:
+#        with open(os.path.join(data_dir, "val.jsonl"), "r") as f:
+#            lines = json.loads(json.dumps([f.read()]))
         with open(os.path.join(data_dir, "val.jsonl"), "r") as f:
-            lines = json.loads(json.dumps([f.read()]))
-        return self._create_examples(lines, "val")
+            lines = f.read().splitlines()
+            data = []
+            for line in lines:
+                data.append(json.loads(line))
+        return self._create_examples(data, "val")
 
     def get_labels(self):
         """See base class."""
-        return ["true", "false"]
+        return [True, False]
 
     def _create_examples(self, lines, set_type):
         """Creates examples for the training and dev sets."""
