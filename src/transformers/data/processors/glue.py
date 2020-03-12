@@ -185,10 +185,11 @@ class BoolqProcessor(DataProcessor):
         logger.info("LOOKING AT {}".format(os.path.join(data_dir, "train.jsonl")))
 #        with open(os.path.join(data_dir, "train.jsonl"), "r", encoding="utf-8-sig") as f:
         with open(os.path.join(data_dir, "train.jsonl"), "r") as f:
-            lines = json.loads(json.dumps([f.read()]))
-        print("Whyyyyyy")
-        pring(lines)
-        return self._create_examples(lines, "train")
+            lines = f.read().splitlines()
+            data = []
+            for line in lines:
+                data.append(json.loads(line))
+        return self._create_examples(data, "train")
 
     def get_val_examples(self, data_dir):
         """See base class."""
